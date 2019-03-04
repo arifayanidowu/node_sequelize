@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Sequelize = require("sequelize");
-const db = require("../config/database");
+// const db = require("../config/database");
 const Gig = require("../models/Gigs");
 const Op = Sequelize.Op;
 
