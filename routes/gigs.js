@@ -13,28 +13,61 @@ router.get("/", (req, res) => {
     .catch(err => console.log(err));
 });
 
+// Display add a gig form
+router.get("/add", (req, res) => {
+  res.render("add", { title: "Add Gigs" });
+});
+
 // Add a gig
 router.post("/add", (req, res) => {
-  const data = {
-    title: "Wordpress developers",
-    technologies: "wordpress,php,html,css",
-    budget: "$1000",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempus magna ac tellus placerat, sit amet dignissim odio viverra. Vivamus tellus mi, bibendum non erat accumsan, facilisis facilisis diam. Sed quis lacinia felis, non accumsan ligula. Etiam ex tellus, faucibus non leo in, tincidunt viverra elit. Duis aliquam, nulla sed consequat egestas, justo odio gravida lectus, quis pellentesque velit massa nec erat. In malesuada, ipsum et congue lobortis, dolor libero laoreet urna, nec varius diam dolor at tellus. Quisque suscipit dignissim orci ut faucibus.",
-    contact_email: "user2@gmail.com"
-  };
+  let { title, technologies, budget, description, contact_email } = req.body;
 
-  let { title, technologies, budget, description, contact_email } = data;
+  let errors = [];
 
-  Gig.create({
-    title,
-    technologies,
-    budget,
-    description,
-    contact_email
-  })
-    .then(gig => res.redirect("/gigs"))
-    .catch(err => console.log(err));
+  // Validate inputs
+  if (!title) {
+    errors.push({ text: "Please add a title" });
+  }
+  if (!technologies) {
+    errors.push({ text: "Please add some technologies" });
+  }
+  if (!description) {
+    errors.push({ text: "Please add a description" });
+  }
+  if (!contact_email) {
+    errors.push({ text: "Please add a contact email" });
+  }
+
+  // Check for errors
+  if (errors.length > 0) {
+    res.render("add", {
+      errors,
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email
+    });
+  } else {
+    if (!budget) {
+      budget = "Unknown";
+    } else {
+      budget = `$${budget}`;
+    }
+
+    // Make lowercase and remove space after comma
+    technologies = technologies.toLowerCase().replace(/, /g, ",");
+
+    Gig.create({
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email
+    })
+      .then(gig => res.redirect("/gigs"))
+      .catch(err => console.log(err));
+  }
 });
 
 module.exports = router;
