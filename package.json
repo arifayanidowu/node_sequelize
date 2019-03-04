@@ -1,0 +1,22 @@
+{
+  "name": "node_sequelize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-edge": "^1.0.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^4.43.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
