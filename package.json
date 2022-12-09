@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-edge": "^1.0.0",
     "mysql2": "^1.6.5",
     "sequelize": "^4.43.0"
